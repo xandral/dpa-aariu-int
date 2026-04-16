@@ -9,7 +9,7 @@ import numpy as np
 
 from app.config import LLM_MODELS, settings
 from app.models import CheckStatus
-from app.utils.openai_client import openai_client
+from app.utils.ai_client import get_client
 
 logger = logging.getLogger(__name__)
 
@@ -65,8 +65,8 @@ def compute_cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
 
 
 def compute_embedding(text: str, model: str) -> list[float]:
-    """Generate an embedding vector for the given text using OpenAI."""
-    response = openai_client.embeddings.create(input=text, model=model)
+    """Generate an embedding vector for the given text."""
+    response = get_client(model).embeddings.create(input=text, model=model)
     return response.data[0].embedding
 
 
@@ -157,7 +157,7 @@ def llm_classify(baseline_text: str, check_text: str, model: str) -> dict:
         "Reply with JSON only, no markdown."
     )
 
-    response = openai_client.chat.completions.create(
+    response = get_client(model).chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
         temperature=0,

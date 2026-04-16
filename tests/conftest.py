@@ -6,7 +6,7 @@
 import os
 
 os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
-os.environ.setdefault("OPENAI_API_KEY", "test-key")
+os.environ.setdefault("AI_API_KEY", "test-key")
 os.environ.setdefault("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/")
 
 import uuid
