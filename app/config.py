@@ -35,8 +35,8 @@ class Settings(BaseSettings):
     # RabbitMQ (task queue for async baseline acquisition + checks)
     rabbitmq_url: str = "amqp://guest:guest@rabbitmq:5672/"
 
-    # OpenAI
-    openai_api_key: str = ""
+    # AI provider API key (OpenAI, Anthropic, etc.)
+    ai_api_key: str = ""
     embedding_model: str = "text-embedding-3-small"
     llm_model: str = "gpt-4o-mini"
 
