@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "web-page-integrity-monitor"
+version = "0.1.0"
+description = "Monitor web pages for defacement using text diff and AI"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0",
+    "psycopg2-binary>=2.9",
+    "pydantic-settings>=2.6",
+    "httpx>=0.28",
+    "beautifulsoup4>=4.12",
+    "openai>=1.57",
+    "numpy>=2.2",
+    "python-dotenv>=1.0",
+    "celery>=5.3",
+    "lxml>=6.0.4",
+    "langchain-text-splitters>=1.1.1",
+    "trafilatura>=2.0.0",
+    "flower>=2.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.8",
+    "bandit[toml]>=1.8",
+    "pre-commit>=4.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "S", "B"]
+ignore = [
+    "S101",  # assert in tests is fine
+    "B008",  # FastAPI Depends() in function defaults is intentional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B101"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=app --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = ["tests/*"]
